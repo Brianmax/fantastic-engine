@@ -17,7 +17,7 @@ public class UsuarioEntity {
     private String nombres;
     private String apellidos;
     private String email;
-    private Date fechaCreacion;
+    private Date fechaCreacion = new Date();
     private Date fechaActualizacion;
-    private boolean estado;
+    private boolean estado = true;
 }

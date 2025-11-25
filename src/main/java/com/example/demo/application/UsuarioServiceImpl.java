@@ -3,13 +3,16 @@ package com.example.demo.application;
 import com.example.demo.domain.model.UsuarioModel;
 import com.example.demo.domain.ports.in.UsuarioPortIn;
 import com.example.demo.domain.ports.out.UsuarioPortOut;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
-
+@Service
 public class UsuarioServiceImpl implements UsuarioPortIn {
     private final UsuarioPortOut usuarioPortOut;
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    private static final int MIN_USERNAME = 4;
+    private static final int MAX_USERNAME = 25;
 
     public UsuarioServiceImpl(UsuarioPortOut usuarioPortOut) {
         this.usuarioPortOut = usuarioPortOut;
@@ -21,8 +24,8 @@ public class UsuarioServiceImpl implements UsuarioPortIn {
         usuarioModel.setApellidos(usuarioModel.getApellidos().toUpperCase());
         usuarioModel.setEmail(usuarioModel.getEmail().toLowerCase());
 
-
-        usuarioPortOut.crearUsuarioOut(usuarioModel);
+        validarUsuario(usuarioModel);
+        return usuarioPortOut.crearUsuarioOut(usuarioModel);
     }
 
     @Override
@@ -50,6 +53,15 @@ public class UsuarioServiceImpl implements UsuarioPortIn {
         if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException("El email es obligatorio");
         }
-        if ()
+        if (!EMAIL_PATTERN.matcher(email.trim()).matches()) {
+            throw new IllegalArgumentException("El formato del email no es valido");
+        }
+
+        // validando username
+
+        String username = usuarioModel.getUsername();
+        if (username.length() < MIN_USERNAME || username.length() > MAX_USERNAME) {
+            throw new IllegalArgumentException("Formato de username no valido");
+        }
     }
 }
