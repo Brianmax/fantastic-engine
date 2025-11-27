@@ -2,8 +2,10 @@ package com.example.demo.domain.ports.out;
 
 import com.example.demo.domain.model.UsuarioModel;
 
+import java.util.Optional;
+
 public interface UsuarioPortOut {
     UsuarioModel crearUsuarioOut(UsuarioModel usuarioModel);
     UsuarioModel buscarPorEmailOut(String email);
-    UsuarioModel buscarPorIdOut(int id);
+    Optional<UsuarioModel> buscarPorIdOut(int id);
 }

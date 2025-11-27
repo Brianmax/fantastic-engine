@@ -6,6 +6,8 @@ import com.example.demo.infrastructure.entity.UsuarioEntity;
 import com.example.demo.infrastructure.repository.UsuarioRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class UsuarioAdapter implements UsuarioPortOut {
     private final UsuarioRepository usuarioRepository;
@@ -34,7 +36,11 @@ public class UsuarioAdapter implements UsuarioPortOut {
     }
 
     @Override
-    public UsuarioModel buscarPorIdOut(int id) {
-        return null;
+    public Optional<UsuarioModel> buscarPorIdOut(int id) {
+        Optional<UsuarioEntity> usuario = usuarioRepository.findById(id);
+        if (usuario.isPresent()) {
+            return Optional.of(usuario.get().fromEntity());
+        }
+        return Optional.empty();
     }
 }

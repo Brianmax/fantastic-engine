@@ -3,6 +3,7 @@ package com.example.demo.application;
 import com.example.demo.domain.model.UsuarioModel;
 import com.example.demo.domain.ports.in.UsuarioPortIn;
 import com.example.demo.domain.ports.out.UsuarioPortOut;
+import com.example.demo.infrastructure.entity.UsuarioEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,9 +34,14 @@ public class UsuarioServiceImpl implements UsuarioPortIn {
         return null;
     }
 
+    // Implementar la funcionalidad de buscar por Id
+    // validar el id que sea un entero y que sea mayor que 0
     @Override
-    public UsuarioModel buscarPorIdIn(int id) {
-        return null;
+    public Optional<UsuarioModel> buscarPorIdIn(int id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("El id no puede ser menor a 0");
+        }
+        return usuarioPortOut.buscarPorIdOut(id);
     }
 
     @Override

@@ -7,6 +7,6 @@ import java.util.Optional;
 public interface UsuarioPortIn {
     UsuarioModel crearUsuarioIn(UsuarioModel usuarioModel);
     UsuarioModel buscarPorEmailIn(String email);
-    UsuarioModel buscarPorIdIn(int id);
+    Optional<UsuarioModel> buscarPorIdIn(int id);
     Optional<UsuarioModel> actualizarUsuario(int id, UsuarioModel usuarioModel);
 }
